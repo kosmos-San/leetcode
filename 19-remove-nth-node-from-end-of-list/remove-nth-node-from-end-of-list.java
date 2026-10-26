@@ -33,10 +33,7 @@ class Solution {
             head=head.next;
             return head;
         }
-        if(size==1){
-            p2=null;
-            return p2;
-        }
+        
         if(remove==size){
             p1.next=null;
             return head;
