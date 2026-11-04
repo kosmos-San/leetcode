@@ -14,7 +14,6 @@ class Solution {
         return head;
        } 
 
-       int size=0;
        ListNode p1=head;
        ListNode p2=head;
        while(p2.next!=null&&p2.next.next!=null){
