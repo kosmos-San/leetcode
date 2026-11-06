@@ -30,7 +30,7 @@ class Solution {
             st++;
         }
 
-        // Reconnect the reversed section
+        
         p5.next = p3;
 
         if(p1 != null) {
