@@ -8,48 +8,48 @@ class Solution {
             return result;
         }
 
-        // Main logic
-        int left = 0;
-        int right = p.length();
-
-        while (right <= s.length()) {
-
-            String check = s.substring(left, right);
-
-            boolean isAnagram = checkAnagram(check, p);
-
-            if (isAnagram) {
-                result.add(left);
-            }
-
-            left++;
-            right++;
-        }
-
-        return result;
-    }
-
-    public boolean checkAnagram(String s, String p) {
-
         int[] freq = new int[26];
 
-        // Build frequency array using p
+        // Build frequency array for p
         for (int i = 0; i < p.length(); i++) {
             freq[p.charAt(i) - 'a']++;
         }
 
-        // Check characters using s
-        for (int i = 0; i < s.length(); i++) {
-            freq[s.charAt(i) - 'a']--;
-        }
+        int left = 0;
+        int right = 0;
 
-        // Check whether all frequencies are zero
-        for (int i = 0; i < 26; i++) {
-            if (freq[i] != 0) {
-                return false;
+        while (right < s.length()) {
+
+            // Add incoming character
+            freq[s.charAt(right) - 'a']--;
+
+            // Maintain fixed window size
+            if (right - left + 1 > p.length()) {
+                freq[s.charAt(left) - 'a']++;
+                left++;
             }
+
+            // Check anagram when window size is correct
+            if (right - left + 1 == p.length()) {
+
+                boolean isAnagram = true;
+
+                for (int i = 0; i < 26; i++) {
+                    if (freq[i] != 0) {
+                        isAnagram = false;
+                        break;
+                    }
+                }
+
+                if (isAnagram) {
+                    result.add(left);
+                }
+            }
+
+            // Move right pointer
+            right++;
         }
 
-        return true;
+        return result;
     }
 }
