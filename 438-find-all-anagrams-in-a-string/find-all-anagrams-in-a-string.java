@@ -10,14 +10,15 @@ class Solution {
 
         int[] freq = new int[26];
 
-        // Store frequency of characters in p
+        // Build frequency array for p
         for (int i = 0; i < p.length(); i++) {
             freq[p.charAt(i) - 'a']++;
         }
 
         int left = 0;
+        int right = 0;
 
-        for (int right = 0; right < s.length(); right++) {
+        while (right < s.length()) {
 
             // Add incoming character
             freq[s.charAt(right) - 'a']--;
@@ -28,7 +29,7 @@ class Solution {
                 left++;
             }
 
-            // Check if current window is an anagram
+            // Check anagram when window size is correct
             if (right - left + 1 == p.length()) {
 
                 boolean isAnagram = true;
@@ -44,6 +45,9 @@ class Solution {
                     result.add(left);
                 }
             }
+
+            // Move right pointer
+            right++;
         }
 
         return result;
