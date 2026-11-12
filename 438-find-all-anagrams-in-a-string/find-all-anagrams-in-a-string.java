@@ -8,48 +8,48 @@ class Solution {
             return result;
         }
 
-        int[] freq = new int[26];
-
-        // Build frequency array for p
-        for (int i = 0; i < p.length(); i++) {
-            freq[p.charAt(i) - 'a']++;
-        }
-
+        // Main logic
         int left = 0;
-        int right = 0;
+        int right = p.length();
 
-        while (right < s.length()) {
+        while (right <= s.length()) {
 
-            // Add incoming character
-            freq[s.charAt(right) - 'a']--;
+            String check = s.substring(left, right);
 
-            // Maintain fixed window size
-            if (right - left + 1 > p.length()) {
-                freq[s.charAt(left) - 'a']++;
-                left++;
+            boolean isAnagram = checkAnagram(check, p);
+
+            if (isAnagram) {
+                result.add(left);
             }
 
-            // Check anagram when window size is correct
-            if (right - left + 1 == p.length()) {
-
-                boolean isAnagram = true;
-
-                for (int i = 0; i < 26; i++) {
-                    if (freq[i] != 0) {
-                        isAnagram = false;
-                        break;
-                    }
-                }
-
-                if (isAnagram) {
-                    result.add(left);
-                }
-            }
-
-            // Move right pointer
+            left++;
             right++;
         }
 
         return result;
+    }
+
+    public boolean checkAnagram(String s, String p) {
+
+        int[] freq = new int[26];
+
+        // Build frequency array using p
+        for (int i = 0; i < p.length(); i++) {
+            freq[p.charAt(i) - 'a']++;
+        }
+
+        // Check characters using s
+        for (int i = 0; i < s.length(); i++) {
+            freq[s.charAt(i) - 'a']--;
+        }
+
+        // Check whether all frequencies are zero
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
